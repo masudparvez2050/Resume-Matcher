@@ -44,9 +44,16 @@ htmlcov/
 instance/
 .env # Backend specific environment variables
 
+# Config file with API keys - NEVER COMMIT
+**/config.json
+apps/backend/data/config.json
+
 # cursor related files
 .cursor/
 .cursorrules
+
+# Claude Code local settings (personal overrides)
+.claude/settings.local.json
 
 .DS_Store
 
@@ -92,3 +99,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.idea/
+
+# Config file with API keys - NEVER COMMIT
+config.json
+**/config.json

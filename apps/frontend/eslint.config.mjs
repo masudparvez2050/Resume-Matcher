@@ -1,22 +1,32 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier/flat';
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  {
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'dist/**',
+      '*.config.js',
+      '*.config.mjs',
+      'next-env.d.ts',
+    ],
+  },
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  prettierConfig,
   {
     plugins: {
-      prettier: await import('eslint-plugin-prettier'),
+      prettier: prettierPlugin,
     },
     rules: {
       'prettier/prettier': 'error',
+      // Disable new rule from eslint-config-next@16 — existing code uses
+      // setState in effects for syncing props and DOM measurements.
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
 ];
